@@ -7,6 +7,9 @@ class GiveawaySubmission(models.Model):
     address = models.TextField()
     winner = models.BooleanField(default=False)
 
+    def __unicode__(self):
+        return "{:%m/%d/%Y} [{}]".format(self.date_created, self.address)
+
     def is_eligible(self):
         """
         Consult the blockchain to see if they are actually tipping.
