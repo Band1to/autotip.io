@@ -1,9 +1,10 @@
 import datetime
 
 from django.http import HttpResponse
+from django.template.response import TemplateResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from models import GiveawaySubmission
+from models import GiveawaySubmission, Blog
 
 @csrf_exempt
 def giveaway_submission(request):
@@ -13,3 +14,11 @@ def giveaway_submission(request):
         address=address
     )
     return HttpResponse("OK")
+
+def home(request):
+    return TemplateResponse(request, 'home.html', {})
+
+def blog(request):
+    return TemplateResponse(request, 'blog.html', {
+        'blogs': Blog.objects.all(),
+    })

@@ -1,6 +1,12 @@
 import datetime
-import random
+import pytz
+from moneywagon import HistoricalTransactions
+
 from django.db import models
+
+class Blog(models.Model):
+    author = models.ForeignKey()
+    content = models.TextField()
 
 class GiveawaySubmission(models.Model):
     date_created = models.DateTimeField(default=datetime.datetime.now)
@@ -8,28 +14,20 @@ class GiveawaySubmission(models.Model):
     winner = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return "{:%m/%d/%Y} [{}]".format(self.date_created, self.address)
+        win = " {WINNER}" if self.winner else ''
+        return "{:%m/%d/%Y} [{}]{}".format(self.date_created, self.address, win)
 
-    def is_eligible(self):
+    def amount_tipped_interval(self, start, end):
         """
         Consult the blockchain to see if they are actually tipping.
         """
-        return True
+        txs = HistoricalTransactions().get('btc', self.address)
+        if not txs:
+            return 0
 
-def draw_winner(drawing_date):
-    """
-    For a given drawling date, select one submission out of the prior week
-    randomly
-    """
-    week_ago = drawing_date - datetime.timedelta(days=7)
+        total = 0
+        for tx in txs:
+            if start.replace(tzinfo=pytz.UTC) < tx['date'] < end.replace(tzinfo=pytz.UTC):
+                total += tx['amount']
 
-    all_submissions = GiveawaySubmission.objects.filter(
-        date_created__gt=week_ago,
-        date_created__lt=drawing_date,
-        winner=False
-    )
-
-    while True:
-        candidate = random.choice(all_submissions)
-        if candidate.is_eligible():
-            return candidate
+        return total
