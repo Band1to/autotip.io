@@ -4,7 +4,41 @@
         <meta name="microtip" content="1K65TijR56S4CcwjXBnecYEKmTNrMag5uq" data-currency='btc' data-recipient="Chris Priest (Developer)">
     </head>
     <body>
+        <style>
+            body {
+                padding: 20px;
+            }
+            .blog_entry {
+                width: 20em;
+            }
+            #nav_table {
+                width: 100%;
+            }
+            #nav_table td {
+                width: 25%;
+                text-align: center;
+                background: lightgray;
+            }
+            #canvas {
+                margin: 0 auto 0 auto;
+                width: 50em;
+            }
+        </style>
+        <h1>Autotip</h1>
+        Decentralized Crytocurrency Microtipping Platform.<br><br>
+
+        <table id="nav_table">
+            <tr>
+                <td><a href="https://chrome.google.com/webstore/detail/autotip/flffaocphcckgaklakkmccbfikneciib">Chrome Web Store</a></td>
+                <td><a href="https://github.com/priestc/Autotip">Github</a></td>
+                <td><a href="http://reddit.com/r/Autotip">Reddit</a></td>
+                <td><a href="/blog">Blog</a></td>
+            </tr>
+        </table>
+
+        <div id="canvas">
         {% block content %}
         {% endblock %}
+        </div>
     </body>
 </html>
