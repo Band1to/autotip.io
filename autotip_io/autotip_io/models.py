@@ -19,18 +19,21 @@ class GiveawaySubmission(models.Model):
         win = " {WINNER}" if self.winner else ''
         return "{:%m/%d/%Y} [{}]{}".format(self.date_created, self.address, win)
 
-    def amount_tipped_interval(self, start, end):
+    def tipping_stats_interval(self, start, end):
         """
         Consult the blockchain to see if they are actually tipping.
+        Returna ho much tipped and how many tips made for the previous week.
         """
         txs = HistoricalTransactions().get('btc', self.address)
         if not txs:
             return 0
 
+        count = 0
         total = 0
         for tx in txs:
             if start.replace(tzinfo=pytz.UTC) < tx['date'] < end.replace(tzinfo=pytz.UTC):
                 if tx['amount'] < 0: # only count spends
                     total += tx['amount']
+                    count += 1
 
-        return abs(total)
+        return abs(total), count

@@ -1,26 +1,25 @@
-<!DOCTYPE html>
-<html>
-    <body>
-        <h1>Autotip</h1>
-        Decentralized Crytocurrency Microtipping Platform.<br><br>
+{% extends "base.html" %}
 
-        <a href="https://chrome.google.com/webstore/detail/autotip/flffaocphcckgaklakkmccbfikneciib">Chrome Web Store</a><br>
-        <a href="https://github.com/priestc/Autotip">Github</a><br>
-        <a href="http://reddit.com/r/Autotip">Reddit</a><br>
-        <a href="/blog">Blog</a><br>
+{% block content %}
+    <h1>Autotip</h1>
+    Decentralized Crytocurrency Microtipping Platform.<br><br>
 
-        <br>
+    <a href="https://chrome.google.com/webstore/detail/autotip/flffaocphcckgaklakkmccbfikneciib">Chrome Web Store</a><br>
+    <a href="https://github.com/priestc/Autotip">Github</a><br>
+    <a href="http://reddit.com/r/Autotip">Reddit</a><br>
+    <a href="/blog">Blog</a><br>
 
-        Latest News:
+    <br>
 
-        {% for blog in latest_blogs %}
-        <div>
-            <h2>{{ blog.title }}</h2>
-            {{ blog.date_created }}, by {{ blog.author }}
-            <p>
-                {{ blog.content }}
-            </p>
-        </div>
-        {% endfor %}
-    </body>
-</html>
+    Latest News:
+
+    {% for blog in latest_blogs %}
+    <div>
+        <h2>{{ blog.title }}</h2>
+        {{ blog.date_created }}, by {{ blog.author }}
+        <p>
+            {{ blog.content }}
+        </p>
+    </div>
+    {% endfor %}
+{% endblock %}

@@ -1,5 +1,6 @@
 import random
 from .models import GiveawaySubmission
+from moneywagon import AddressBalance
 
 def draw_winner(drawing_date):
     """
@@ -20,4 +21,5 @@ def draw_winner(drawing_date):
             return candidate
 
 def dry_run():
-    pass
+        giveaway_balance = AddressBalance().get('btc', '1K65TijR56S4CcwjXBnecYEKmTNrMag5uq')
+    print giveaway_balance, "to give away"
