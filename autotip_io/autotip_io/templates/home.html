@@ -1,5 +1,20 @@
 <h1>Autotip</h1>
-More here to come
+More here to come<br><br>
 
-<a href="https://chrome.google.com/webstore/detail/autotip/flffaocphcckgaklakkmccbfikneciib">Chrome Web Store</a>
-<a href="https://github.com/priestc/Autotip">Githib</a>
+<a href="https://chrome.google.com/webstore/detail/autotip/flffaocphcckgaklakkmccbfikneciib">Chrome Web Store</a><br>
+<a href="https://github.com/priestc/Autotip">Github</a><br>
+<a href="/blog">Blog</a><br>
+
+<br>
+
+Latest News:
+
+{% for blog in latest_blogs %}
+<div>
+    <h2>{{ blog.title }}</h2>
+    {{ blog.date_created }}, by {{ blog.author }}
+    <p>
+        {{ blog.content }}
+    </p>
+</div>
+{% endfor %}

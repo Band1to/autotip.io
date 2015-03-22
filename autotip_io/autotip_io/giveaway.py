@@ -19,4 +19,5 @@ def draw_winner(drawing_date):
         if candidate.is_eligible():
             return candidate
 
-def dry_run()
+def dry_run():
+    pass

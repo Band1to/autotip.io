@@ -16,7 +16,9 @@ def giveaway_submission(request):
     return HttpResponse("OK")
 
 def home(request):
-    return TemplateResponse(request, 'home.html', {})
+    return TemplateResponse(request, 'home.html', {
+        "latest_blogs": Blog.objects.order_by("-date_created")[:3]
+    })
 
 def blog(request):
     return TemplateResponse(request, 'blog.html', {

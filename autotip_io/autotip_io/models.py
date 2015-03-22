@@ -5,8 +5,9 @@ from moneywagon import HistoricalTransactions
 from django.db import models
 
 class Blog(models.Model):
-    author = models.ForeignKey()
+    author = models.ForeignKey('auth.User')
     content = models.TextField()
+    date_created = models.DateTimeField(default=datetime.datetime.now)
 
 class GiveawaySubmission(models.Model):
     date_created = models.DateTimeField(default=datetime.datetime.now)
