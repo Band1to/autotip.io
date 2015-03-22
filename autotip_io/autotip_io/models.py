@@ -6,6 +6,7 @@ from django.db import models
 
 class Blog(models.Model):
     author = models.ForeignKey('auth.User')
+    title = models.CharField(max_length=255)
     content = models.TextField()
     date_created = models.DateTimeField(default=datetime.datetime.now)
 
@@ -29,6 +30,7 @@ class GiveawaySubmission(models.Model):
         total = 0
         for tx in txs:
             if start.replace(tzinfo=pytz.UTC) < tx['date'] < end.replace(tzinfo=pytz.UTC):
-                total += tx['amount']
+                if tx['amount'] < 0: # only count spends
+                    total += tx['amount']
 
-        return total
+        return abs(total)
