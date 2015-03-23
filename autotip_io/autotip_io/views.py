@@ -13,7 +13,10 @@ def giveaway_submission(request):
         date_created=datetime.datetime.now(),
         address=address
     )
-    return HttpResponse("OK")
+    if created:
+        return HttpResponse("OK")
+    else:
+        return HttpResponse("Duplicate for today.")
 
 def home(request):
     return TemplateResponse(request, 'home.html', {
