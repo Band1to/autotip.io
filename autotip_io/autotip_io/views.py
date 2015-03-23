@@ -24,3 +24,6 @@ def blog(request):
     return TemplateResponse(request, 'blog.html', {
         'blogs': Blog.objects.all(),
     })
+
+def giveaway_rules(request):
+    return TemplateResponse(request, 'giveaway_rules.html', {})
