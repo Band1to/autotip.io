@@ -1,13 +1,12 @@
 import datetime
 import random
 from .models import GiveawaySubmission
-from moneywagon import AddressBalance
+from moneywagon import get_address_balance, push_tx
 from pybitcointools import history, mktx, sign
-
 
 def perform_giveaway(dry_run=True):
     giveaway_address = '1K65TijR56S4CcwjXBnecYEKmTNrMag5uq'
-    giveaway_balance = AddressBalance().get('btc', giveaway_address)
+    giveaway_balance = get_address_balance('btc', giveaway_address)
     to_be_given_away = giveaway_balance / 2
 
     print giveaway_balance, "BTC in donate address", to_be_given_away, "will be given away"
@@ -40,5 +39,7 @@ def perform_giveaway(dry_run=True):
             candidate.winner = True
             candidate.save()
 
-    tx = mktx(ins, outs)
+    tx = mktx(ins, winners)
     tx2 = sign(tx, 0, priv)
+
+    push_tx('btc', tx)
