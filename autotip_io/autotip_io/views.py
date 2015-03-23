@@ -30,3 +30,6 @@ def blog(request):
 
 def giveaway_rules(request):
     return TemplateResponse(request, 'giveaway_rules.html', {})
+
+def chrome_extension_docs(request):
+    return TemplateResponse(request, 'chrome_extension_usage.html', {})
