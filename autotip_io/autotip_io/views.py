@@ -10,7 +10,7 @@ from models import GiveawaySubmission, Blog
 def giveaway_submission(request):
     address = request.POST['address']
     gs, created = GiveawaySubmission.objects.get_or_create(
-        date_created=datetime.datetime.now(),
+        date_created=datetime.date.today(),
         address=address
     )
     if created:
