@@ -7,7 +7,7 @@
         padding: 10px;
     }
     .image_container img {
-        border: 2px solid gray;
+        border: 2px solid black;
         box-shadow: 10px 10px 5px #888888;
         cursor: pointer;
     }
@@ -58,7 +58,85 @@ and post it into a github issue. No personal information or private keys will ev
 
 <h3>For Content Creators</h3>
 
-coming soon
+<p>
+    Lets say you're a blogger. You would like to earm money from the audience that reads your blogs.
+    One way to do this is to put ads on your site. Ads can be easily blocked, and for users
+    who don't block them, they are annoying to look at.
+
+    Getting started using the platform is as easy as adding a snippet of code to every
+    page that contains content.
+
+    Somewhere in the HTML document of your blog's header, you can add a meta take like this:
+
+    <pre><code>
+        &lt;meta name="microtip" content="1HWpyFJ7N6rvFkq3ZCMiFnqM6hviNFmG5X" data-currency='btc' data-recipient="Autotip Giveaway Program">
+    </pre></code>
+
+    (Replace the value of `content` with your actual bitcoin address. To get started with bitcoin, go to [bitcoin.org](https://bitcoin.org/en/).
+
+    You can also use altcoin addresses:
+
+    <pre><code>
+        &lt;meta name="microtip" content="Lb78JDGxMcih1gs3AirMeRW6jaG5V9hwFZ" data-currency='ltc'>
+    </code></pre>
+
+    <h4>Multiple tipping addresses per page</h4>
+
+    The standard also permits the use of multiple tip addresses. In the case that the extension finds
+    multiple tip addresses, the tip gets split amoung each address equally.
+
+    Currently, this extension does not support sending tips to altcoin addresses, but support is planned.
+
+    <h4>Full meta tag specification</h4>
+
+    The following attributes are associated with the meta tag specification:
+
+    <br><br>
+
+    <table>
+        <tr>
+            <th>Attribute</th>
+            <th></th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>name</td><td><b>required</b></td><td>always "microtip"</td>
+        </tr>
+        <tr>
+            <td>content</td><td><b>required</b></td><td>The cryptocurrency address of the person who will recieve tips.</td>
+        </tr>
+        <tr>
+            <td>data-currency</td><td><em>optional</em></td><td>The name of the currency. Examples: `BTC`, `LTC`, also you can write the whole name of the curency, such as "dogecoin", and "peercoin". Case insensitive. If left blank, `BTC` is implied.</td>
+        </tr>
+        <tr>
+            <td>data-recipient</td><td><em>optional</em></td><td>Human readable name of the person who will revieve the tips. Can be a person's name or just "Development team". The purpose of this field is to be shown to the tipping user at the time of making the tip.</td>
+        </tr>
+        <tr>
+            <td>data-ratio</td><td><em>optional</em></td><td>Only applicable if there are multiple microtip tags on a single page. This attribute tells the tiping extension how much of the tip should go to this address. The value should be a decimal number between 0 and 1.0. All ratio values must add up to less than or equal to 1.0.</td>
+        </tr>
+    </table>
+
+    <h4>Examples</h4>
+
+    One single Litecoin address, all going to the "Development Team" wallet address.
+    <pre><code>
+        &lt;meta name="microtip" content="Lb78JDGxMcih1gs3AirMeRW6jaG5V9hwFZ" data-currency='ltc' data-recipient="Development Team">
+    </code></pre>
+
+    Two different bitcoin address. Half going to Bob, the other half going to Terry. (Bitcoin currency is implied)
+
+    <pre><code>
+        &lt;meta name="microtip" content="1HWpyFJ7N6rvFkq3ZCMiFnqM6hviNFmG5X" data-recipient="Bob">
+        &lt;meta name="microtip" content="1DCzzFuW33YJv9RGUMHyvgaoTdcNkwGMeR" data-recipient="Terry">
+    </code></pre>
+
+    Same as above, but 80% of all tips goes to Terry, 20% goes to Bob.
+
+    <pre><code>
+        &lt;meta name="microtip" content="1HWpyFJ7N6rvFkq3ZCMiFnqM6hviNFmG5X" data-recipient="Bob" data-ratio="0.2">
+        &lt;meta name="microtip" content="1DCzzFuW33YJv9RGUMHyvgaoTdcNkwGMeR" data-recipient="Terry" data-ratio="0.8">
+    </code></pre>
+</p>
 
 <script>
     $("img").click(function() {
