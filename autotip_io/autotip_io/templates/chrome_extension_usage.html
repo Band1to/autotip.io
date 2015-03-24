@@ -1,28 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .image_container {
+        text-align: center;
+        padding: 10px;
+    }
+    .image_container img {
+        border: 2px solid gray;
+        box-shadow: 10px 10px 5px #888888;
+        cursor: pointer;
+    }
+</style>
 
-<h1>Autotip Chrome Extension Usage</h1>
+<h2>Autotip Chrome Extension Usage</h2>
 
-<h2>For tippers</h2>
+<h3>For tippers</h3>
 
 <ol>
     <li>Go to the chrome Web store, and search for Autotip. Install the extension.</li>
     <li>Refresh any page with the autotip meta tag embedded (http://autotip.io is one example)</li>
     <li>You should see a little "a" icon in your browser's address bar. Clck that icon.
         A popup should appear. You may also see a notification telling you your auotip
-        balance is zero. This is true, since you haven't deposit any bicoin to the extension yet.</li>
+        balance is zero. This is true, since you haven't deposit any bicoin to the extension yet.
+        <br>
+        <div class="image_container">
+            <img src="{{ STATIC_URL }}autotip-popup.png" height="25%" width="25%">
+        </div>
+        </li>
     <li>Inside that popup you will see a QR code. That QR code is your deposit address.
         You must send some bitcoin to that address.</li>
     <li>Another way to see your deposit address is to go to the options page from the
-        <a href="chrome://extensions" target="_blank">chrome://extensions</a> page.</li>
+        <a href="chrome://extensions" target="_blank">chrome://extensions</a> page.
+        <div class="image_container">
+            <img src="{{ STATIC_URL }}extensions-page.png" height="50%" width="50%">
+        </div>
+        </li>
     <li>From now on you'll tip $0.05 worth of bitcoin for each page that you land on with
         the autotip meta tags embedded. If you feel like $0.05 is too much, you can change that value
         in the options page. You can also configure it to send automatically, or only from the
         popup.</li>
 </ol>
 
-<h3>Debugging the extension</h3>
+<h4>Debugging the extension</h4>
 
 <p>
 If you think the extension is being buggy, open the "background page" from within the
@@ -30,10 +50,19 @@ If you think the extension is being buggy, open the "background page" from withi
 The extension was built to be very verbose so there should be some text there descibing what the problem
 may be. If you san't understand what is goin on, take a screenshot of your background page console
 and post it into a github issue. No personal information or private keys will ever get printed into the console.
+<div class="image_container">
+    <img src="{{ STATIC_URL }}background-console.png" height="50%" width="50%">
+</div>
+
 </p>
 
-<h2>For Content Creators</h2>
+<h3>For Content Creators</h3>
 
 coming soon
 
+<script>
+    $("img").click(function() {
+        $(this).attr("width", "100%").attr("height", "100%");
+    });
+</script>
 {% endblock %}
