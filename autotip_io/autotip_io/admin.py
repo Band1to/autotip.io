@@ -6,7 +6,7 @@ class GiveawaySubmissionAdmin(admin.ModelAdmin):
 
     def blockchain(self, obj):
         url = "https://blockchain.info/address/%s" % obj.address
-        return "<a href='%s'>Link</a>" % url
+        return "<a href='%s' target='_blank'>Link</a>" % url
     blockchain.allow_tags = True
 
 class BlogAdmin(admin.ModelAdmin):
