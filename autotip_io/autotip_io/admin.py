@@ -5,7 +5,7 @@ class GiveawaySubmissionAdmin(admin.ModelAdmin):
     list_display = ('date_created', 'address', 'blockchain')
 
     def blockchain(self, obj):
-        url = "https://blockchan.info/address/%s" % obj.address
+        url = "https://blockchain.info/address/%s" % obj.address
         return "<a href='%s'>Link</a>" % url
     blockchain.allow_tags = True
 
