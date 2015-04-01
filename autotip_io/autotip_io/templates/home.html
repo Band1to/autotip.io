@@ -18,6 +18,7 @@
     <div class="blog_entry">
         <h3>{{ blog.title }}</h3>
         <em>{{ blog.date_created }}, by {{ blog.author }}</em>
+        <br><br>
         {{ blog.content|safe }}
     </div>
     {% endfor %}
