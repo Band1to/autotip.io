@@ -22,7 +22,7 @@
     <div class="blog_entry">
         <h3>{{ blog.title }}</h3>
         <em>{{ blog.date_created }}, by {{ blog.author }}</em>
-        <p>{{ blog.content|safe }}</p>
+        {{ blog.content|safe }}
     </div>
     {% endfor %}
 {% endblock %}
