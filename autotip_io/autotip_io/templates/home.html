@@ -1,15 +1,11 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+{{ block.super }}
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}home.css" media="screen" />
+{% endblock %}
+
 {% block content %}
-    <style>
-        .blog_entry {
-            width: 40em;
-            margin: 10px auto 0 auto;
-            border: 1px solid gray;
-            padding: 10px;
-            background: #f9f9f9;
-        }
-    </style>
     <h2>Introduction</h2>
     <p>Autotip is a Chrome Browser extension that tips very small amounts of bitcoin
     to the creators of websites you visit.</p>

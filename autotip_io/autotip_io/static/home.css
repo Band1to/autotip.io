@@ -1,0 +1,7 @@
+.blog_entry {
+    width: 40em;
+    margin: 10px auto 0 auto;
+    border: 1px solid gray;
+    padding: 10px;
+    background: #f9f9f9;
+}
