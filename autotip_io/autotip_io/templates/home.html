@@ -3,6 +3,8 @@
 {% block extrahead %}
 {{ block.super }}
 <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}home.css" media="screen" />
+<link href="{{ STATIC_URL }}jquery.zrssfeed.css" rel="stylesheet" type="text/css" />
+<script src="{{ STATIC_URL }}jquery.zrssfeed.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -12,7 +14,7 @@
 
     <p>It is an alternate way of monetizing content that dooes not require placing advertisments onto webpages.</p>
 
-    <h2>Latest News</h2>
+    <h2>Official Autotip News Items</h2>
 
     {% for blog in latest_blogs %}
     <div class="blog_entry">
@@ -22,4 +24,14 @@
         {{ blog.content|safe }}
     </div>
     {% endfor %}
+
+    <h2>Autotip in the news</h2>
+    <strong>Courtesy Google News RSS Feeds</strong>
+    <div id="feeds">
+    </div>
+
+    <script>
+        var feed_url = "https://news.google.com/news?q=autotip+bitcoin&output=rss";
+	    $('#feeds').rssfeed(feed_url);
+    </script>
 {% endblock %}

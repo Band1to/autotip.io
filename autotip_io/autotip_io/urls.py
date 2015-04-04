@@ -9,5 +9,6 @@ urlpatterns = patterns('',
     url(r'^giveaway/submission', views.giveaway_submission),
     url(r'^giveaway/info', views.giveaway_rules),
     url(r'^docs/chrome_extension', views.chrome_extension_docs),
+    url(r'^docs/microtip-meta-tag', views.meta_tag_docs),
     url(r'^admin/', include(admin.site.urls)),
 )

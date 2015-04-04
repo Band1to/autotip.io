@@ -33,3 +33,6 @@ def giveaway_rules(request):
 
 def chrome_extension_docs(request):
     return TemplateResponse(request, 'chrome_extension_usage.html', {})
+
+def meta_tag_docs(request):
+    return TemplateResponse(request, 'meta_tag_docs.html', {})
