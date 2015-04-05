@@ -4,10 +4,10 @@ from .models import GiveawaySubmission
 from moneywagon import get_address_balance, push_tx
 from pybitcointools import history, mktx, sign
 
-def perform_giveaway(dry_run=True):
+def perform_giveaway(dry_run=True, giveaway_private_key=None):
     giveaway_address = '1K65TijR56S4CcwjXBnecYEKmTNrMag5uq'
     giveaway_balance = get_address_balance('btc', giveaway_address)
-    to_be_given_away = giveaway_balance / 2
+    to_be_given_away = giveaway_balance * 0.10
 
     print giveaway_balance, "BTC in donate address", to_be_given_away, "will be given away"
 
@@ -20,8 +20,12 @@ def perform_giveaway(dry_run=True):
         winner=False
     )
 
-    print all_submissions.count(), "submissions received"
-    target_count = int(all_submissions.count() / 2.0)
+    submission_count = all_submissions.count()
+    print submission_count, "submissions received"
+    if submission_count == 0:
+        return
+
+    target_count = int(submission_count / 2.0)
     reward_amount = to_be_given_away / target_count
 
     print reward_amount, "will be awarded to", target_count, "(half of all submissions)"

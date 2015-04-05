@@ -32,6 +32,6 @@
 
     <script>
         var feed_url = "https://news.google.com/news?q=autotip+bitcoin&output=rss";
-	    $('#feeds').rssfeed(feed_url);
+	    $('#feeds').rssfeed(feed_url, {linktarget: '_blank'});
     </script>
 {% endblock %}
