@@ -22,27 +22,33 @@ def perform_giveaway(dry_run=True, giveaway_private_key=None):
     drawing_date = datetime.datetime.now()
     week_ago = drawing_date - datetime.timedelta(days=7)
 
-    all_submissions = GiveawaySubmission.objects.filter(
+    raw_submissions = list(GiveawaySubmission.objects.filter(
         date_created__gt=week_ago,
         date_created__lt=drawing_date,
         winner=False
-    )
+    ))
 
-    submission_count = all_submissions.count()
+    # for now, try to send to unique addresses instead of multiple entries to
+    # the same address. This code should be removed when there are more unique
+    # entries per drawing.
+    all_submissions = []
+    for sub in raw_submissions:
+        if sub.address not in [x.address for x in all_submissions]:
+            all_submissions.append(sub)
+
+
+    submission_count = len(all_submissions) #.count()
     print submission_count, "submissions received"
     if submission_count == 0:
         return
 
-    target_count = int(submission_count / 2.0)
+    target_count = int(submission_count / 1.0)
     reward_amount = to_be_given_away / target_count
 
     print "%d submissions (half of all submissions) will be each awarded %.8f BTC (%.2f USD)" % (
         target_count,
         reward_amount, reward_amount * dollars_per_btc
     )
-
-    if dry_run:
-        return
 
     payout_amount_satoshi = int(reward_amount * 1e8)
 
@@ -53,25 +59,30 @@ def perform_giveaway(dry_run=True, giveaway_private_key=None):
     print "satoshi award:", payout_amount_satoshi
     print "encoded reward:", payout_amount_satoshi_encoded
 
+    # this is theamount each potential winner needs to have to hae tipped to be
+    # eligible for a payout.
+    min_tip_amount = 0.04 / dollars_per_btc
+    print "5 cents of btc", min_tip_amount
+
     winners = []
     while len(winners) < target_count:
         candidate = random.choice(all_submissions)
-        print "*Found winner, checking if eligible:", candidate
-        if candidate.is_eligible() or True:
-            print "Winner!"
+        if candidate.is_eligible(min_tip_amount):
+            print "** Winner!", candidate
             winners.append({
                 'address': candidate.address,
                 'value': payout_amount_satoshi_encoded
             })
-            candidate.winner = True
-            candidate.save()
+            if not dry_run:
+                candidate.winner = True
+                candidate.save()
         else:
-            print "Not eligible"
+            print "Rejected, Not eligible", candidate
 
     total_awarded_satoshi = sum([x['value'] for x in winners])
     print "Total satoshis added to giveaway TX:", total_awarded_satoshi
 
-    fee_satoshi = 3800
+    fee_satoshi = 10000
     change_satoshi = int((giveaway_balance * 1e8) - (total_awarded_satoshi + fee_satoshi))
 
     # we have to add our own change output since pybitcointools doesnt do this for you.
@@ -82,4 +93,6 @@ def perform_giveaway(dry_run=True, giveaway_private_key=None):
         tx = sign(tx, i, giveaway_private_key)
 
     print tx
-    push_tx('btc', tx)
+
+    if not dry_run:
+        print push_tx('btc', tx)

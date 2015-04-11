@@ -17,23 +17,28 @@ class GiveawaySubmission(models.Model):
 
     def __unicode__(self):
         win = " {WINNER}" if self.winner else ''
-        return "{:%m/%d/%Y} {} {}".format(self.date_created, self.address, win)
+        return "[{:%m/%d/%Y} {}]{}".format(self.date_created, self.address, win)
 
-    def is_eligible(self):
-        """
-        Is this
-        """
+    def is_eligible(self, min_tip_amount):
+        if self.winner:
+            # no duplicate winners
+            return False
+
         end = datetime.datetime.today()
         start = end - datetime.timedelta(days=7)
-        tipped, count = self.tipping_stats_interval(start, end)
-        return tipped > 0.10 and count > 2
+        tipped_btc, count = self.tipping_stats_interval(start, end)
+        return tipped_btc > min_tip_amount and count >= 1
 
 
-    def tipping_stats_interval(self, start, end):
+    def tipping_stats_interval(self, start=None, end=None):
         """
         Consult the blockchain to see if they are actually tipping.
         Returns how much tipped and how many tips made for the previous week.
         """
+        if not start and not end:
+            end = datetime.datetime.today()
+            start = end - datetime.timedelta(days=7)
+
         txs = HistoricalTransactions().get('btc', self.address)
         if not txs:
             return 0
