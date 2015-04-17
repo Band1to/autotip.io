@@ -1,16 +1,16 @@
 import datetime
 import random
 from .models import GiveawaySubmission
-from moneywagon import push_tx, get_current_price
+from moneywagon import get_current_price, Transaction
 from pybitcointools import history, mktx, sign
 
 def perform_giveaway(dry_run=True, giveaway_private_key=None):
     giveaway_address = '1K65TijR56S4CcwjXBnecYEKmTNrMag5uq'
     #giveaway_address = '1BUxsE6s6Kkpwn4ZQiYuu3zVAtVffJEyDP' # for testing
-    import debug
 
-    ins = history(giveaway_address)
-    giveaway_balance = sum(x['value'] for x in ins if not x.has_key('spend')) / 1e8
+    tx = Transaction('btc')
+    tx.add_input(giveaway_address, giveaway_private_key)
+    giveaway_balance = tx.total_input_satoshis() / 1e8
 
     to_be_given_away = giveaway_balance * 0.02
     dollars_per_btc, source = get_current_price('btc', 'usd')
@@ -37,7 +37,6 @@ def perform_giveaway(dry_run=True, giveaway_private_key=None):
         if sub.address not in [x.address for x in all_submissions]:
             all_submissions.append(sub)
 
-
     submission_count = len(all_submissions) #.count()
     print submission_count, "submissions received"
     if submission_count == 0:
@@ -63,37 +62,28 @@ def perform_giveaway(dry_run=True, giveaway_private_key=None):
     # this is theamount each potential winner needs to have to hae tipped to be
     # eligible for a payout.
     min_tip_amount = 0.04 / dollars_per_btc
-    print "5 cents of btc", min_tip_amount
 
-    winners = []
-    while len(winners) < target_count:
+    total_awarded_satoshi = 0
+    while len(tx.outs) < target_count:
         candidate = random.choice(all_submissions)
         if candidate.is_eligible(min_tip_amount):
             print "** Winner!", candidate
-            winners.append({
-                'address': candidate.address,
-                'value': payout_amount_satoshi_encoded
-            })
-            if not dry_run:
-                candidate.winner = True
-                candidate.save()
+            tx.add_output(
+                address=candidate.address,
+                value=payout_amount_satoshi_encoded
+            )
+            candidate.winner = True
+            candidate.save()
+            total_awarded_satoshi += payout_amount_satoshi_encoded
         else:
             print "Rejected, Not eligible", candidate
 
-    total_awarded_satoshi = sum([x['value'] for x in winners])
     print "Total satoshis added to giveaway TX:", total_awarded_satoshi
 
-    fee_satoshi = 10000
-    change_satoshi = int((giveaway_balance * 1e8) - (total_awarded_satoshi + fee_satoshi))
-
-    # we have to add our own change output since pybitcointools doesnt do this for you.
-    tx = mktx(ins, winners + [{'address': giveaway_address, 'value': change_satoshi}])
-
-    for i in xrange(len(ins)):
-        print "Signing", i
-        tx = sign(tx, i, giveaway_private_key)
-
-    print tx
-
     if not dry_run:
-        print push_tx('btc', tx)
+        print tx.get_hex()
+        raw_input("Press enter to push TX, ctrl-c to cancel")
+        print tx.push()
+    else:
+        GiveawaySubmission.objects.all().update(winner=False)
+        print tx.get_hex()
