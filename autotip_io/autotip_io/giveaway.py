@@ -7,9 +7,10 @@ from pybitcointools import history, mktx, sign
 def perform_giveaway(dry_run=True, giveaway_private_key=None):
     giveaway_address = '1K65TijR56S4CcwjXBnecYEKmTNrMag5uq'
     #giveaway_address = '1BUxsE6s6Kkpwn4ZQiYuu3zVAtVffJEyDP' # for testing
+    import debug
 
     ins = history(giveaway_address)
-    giveaway_balance = sum(x['value'] for x in ins) / 1e8
+    giveaway_balance = sum(x['value'] for x in ins if not x.has_key('spend')) / 1e8
 
     to_be_given_away = giveaway_balance * 0.02
     dollars_per_btc, source = get_current_price('btc', 'usd')
