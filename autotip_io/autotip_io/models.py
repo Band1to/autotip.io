@@ -1,14 +1,19 @@
 import datetime
 import pytz
-from moneywagon import HistoricalTransactions
 
+from django.core.urlresolvers import reverse
 from django.db import models
+
+from moneywagon import HistoricalTransactions
 
 class Blog(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=255)
     content = models.TextField()
     date_created = models.DateTimeField(default=datetime.datetime.now)
+
+    def get_absolute_url(self):
+        return reverse('single-blog', args=[self.pk])
 
 class GiveawaySubmission(models.Model):
     date_created = models.DateTimeField(default=datetime.datetime.now)

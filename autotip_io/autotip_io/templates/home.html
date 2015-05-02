@@ -18,10 +18,13 @@
 
     {% for blog in latest_blogs %}
     <div class="blog_entry">
-        <h3>{{ blog.title }}</h3>
+        <h3><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h3>
+
         <em>{{ blog.date_created }}, by {{ blog.author }}</em>
         <br><br>
         {{ blog.content|safe }}
+        <br><br>
+        <a href="{{ blog.get_absolute_url }}#disqus_thread" data-disqus-identifier="blog-{{ blog.pk }}">Loading Comments...</a>
     </div>
     {% endfor %}
 
@@ -33,5 +36,17 @@
     <script>
         var feed_url = "https://news.google.com/news?q=autotip+bitcoin&output=rss";
 	    $('#feeds').rssfeed(feed_url, {linktarget: '_blank'});
+    </script>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'autotip'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
     </script>
 {% endblock %}

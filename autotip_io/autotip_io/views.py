@@ -23,11 +23,6 @@ def home(request):
         "latest_blogs": Blog.objects.order_by("-date_created")[:3]
     })
 
-def blog(request):
-    return TemplateResponse(request, 'blog.html', {
-        'blogs': Blog.objects.all(),
-    })
-
 def giveaway_rules(request):
     return TemplateResponse(request, 'giveaway_rules.html', {})
 
@@ -40,3 +35,7 @@ def docs(request, doc_name):
 def getting_started(request, guide_name):
     # 'audio', 'writers'
     return TemplateResponse(request, 'getting_started_%s.html' % guide_name, {})
+
+def single_blog(request, pk):
+    blog = Blog.objects.get(pk=pk)
+    return TemplateResponse(request, 'single_blog.html', {'blog': blog})
