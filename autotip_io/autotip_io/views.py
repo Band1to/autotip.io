@@ -34,5 +34,9 @@ def giveaway_rules(request):
 def chrome_extension_docs(request):
     return TemplateResponse(request, 'chrome_extension_usage.html', {})
 
-def meta_tag_docs(request):
-    return TemplateResponse(request, 'meta_tag_docs.html', {})
+def docs(request, doc_name):
+    return TemplateResponse(request, '%s_docs.html' % doc_name, {})
+
+def getting_started(request, guide_name):
+    # 'audio', 'writers'
+    return TemplateResponse(request, 'getting_started_%s.html' % guide_name, {})

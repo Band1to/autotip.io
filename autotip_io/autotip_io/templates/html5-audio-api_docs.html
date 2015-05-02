@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>HTML5 Audio API</h2>
+
+<h3>Enabling Audio support</h3>
+
+For security reasons,
+
+First, you must enable audio capabilities by placing an "Audio Microtip" tag onto the page:
+
+    <pre><code>
+        &lt;meta name="mcrotip" content="audio">
+    </code></pre>
+
+You can use the Audio Microtip tag in conjunction with normal microtip meta tags:
+
+<pre><code>
+    &lt;meta name="microtip" content="1K65TijR56S4CcwjXBnecYEKmTNrMag5uq">
+    &lt;meta name="microtip" content="audio">
+</code></pre>
+
+<h3>Specifying Tip addresses and tip recipients for songs</h3>
+
+In the body of the document, there will be an audio element where the user can listen
+to your song. Inside the body of theaudio element, place a JSON encoded list of tips:
+
+
+<pre><code>
+    &lt;audio src="http://">
+        [{}]
+    &lt;/audio>
+</code></pre>
+
+
+{% endblock %}
