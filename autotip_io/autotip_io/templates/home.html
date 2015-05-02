@@ -24,7 +24,7 @@
         <br><br>
         {{ blog.content|safe }}
         <br><br>
-        <a href="{{ blog.get_absolute_url }}#disqus_thread" data-disqus-identifier="blog-{{ blog.pk }}">Loading Comments...</a>
+        <a href="{{ blog.get_absolute_url }}#disqus_thread" data-disqus-identifier="autotip-blog-{{ blog.pk }}">Loading Comments...</a>
     </div>
     {% endfor %}
 
