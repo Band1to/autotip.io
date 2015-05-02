@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+<meta name="microtip" content="audio">
+
 <h2>HTML5 Audio API</h2>
 
 <h3>Enabling Audio support</h3>
@@ -10,7 +12,7 @@ elements using this API, you must first enable Autotip's "Audio Mode". This is d
 by adding the "Audio Microtip" tag onto the page:
 
     <pre><code>
-        &lt;meta name="mcrotip" content="audio">
+        &lt;meta name="microtip" content="audio">
     </code></pre>
 
 You can use the Audio Microtip tag in conjunction with normal microtip meta tags:
@@ -21,7 +23,7 @@ You can use the Audio Microtip tag in conjunction with normal microtip meta tags
 </code></pre>
 
 In this case, the first tag tells Autotip how to tip the page creators, and the second
-microtip tag tells the audio
+microtip tag tells the extension to look for more tips by monitoring the page's audio tags.
 
 <h3>Specifying Tip addresses and tip recipients for songs</h3>
 
@@ -64,17 +66,18 @@ because of limitations of the chrome extension api.
 <h3>Actual Example</h3>
 
 The following media element is sourced by the code listed above:
-
+<br><br>
 <audio src="http://musicstation.tips.s3.amazonaws.com/08_Free_Four.mp3" controls>
     [{address: "1F4xND22B7qxDtPoGDBLXaxGKXPCyV1c4T", recipient: "Pink Floyd (from the autotip examples page)"}]
 </audio>
-
+<br>
+<br>
 If you have Autotip installed...
 
 You should see the yellow music icon in the address box.
 
 Press the play button and hear the music. When the song ends, the chrome extension will
-pick up the meta tags, and you'll be able to see them in the popup. Click the yellow music
+pick up the meta tags, and you'll see "Pink Floyd" next to a bitcoin logo in the popup. Click the yellow music
 icon to see the popup. Inside the popup you'll see a green button. Clicking on that green button
 will send bitcoin to the recipient.
 
