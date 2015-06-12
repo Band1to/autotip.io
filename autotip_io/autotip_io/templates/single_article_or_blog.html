@@ -3,10 +3,11 @@
 {% block content %}
 
 <div class="blog">
-    <h1>{{ blog.title }}</h1>
-    <em>{{ blog.date_created }}, by {{ blog.author }}</em>
+    <h1>{{ article.title }}{{ blog.title }}</h1>
+    <em>{{ article.author }}{{ blog.date_created }}, by {{ blog.author }}{{ article.author }}</em>
     <br><br>
     {{ blog.content|safe }}
+    {{ article.content|safe }}
     <br><br><br>
 </div>
 
@@ -14,8 +15,11 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = 'autotip';
+    {% if blog %}
     var disqus_identifier = 'autotip-blog-{{ blog.id }}';
-
+    {% elif article %}
+    var disqus_identifier = 'autotip-article-{{ article.id }}';
+    {% endif %}
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
