@@ -6,6 +6,16 @@ from django.db import models
 
 from moneywagon import HistoricalTransactions
 
+class Article(models.Model):
+    author = models.ForeignKey('auth.User')
+    title = models.CharField(max_length=255)
+    tagline = models.TextField()
+    content = models.TextField()
+    date_created = models.DateTimeField(default=datetime.datetime.now)
+
+    def get_absolute_url(self):
+        return reverse('single-article', args=[self.pk])
+
 class Blog(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=255)

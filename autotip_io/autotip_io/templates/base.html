@@ -31,29 +31,32 @@
                 <td><a href="/giveaway/info">Giveaway Program Information</a></td>
             </tr>
         </table>
-        <table>
-            <tr>
-                <td>
-                    Developer Links:
-                </td>
-                <td>
-                    <a href="{% url 'docs' 'microtip-meta-tag' %}">Microtip Meta Tag Specification</a><br>
-                    <a href="{% url 'docs' 'html5-audio-api' %}">Audio API</a>
-                </td>
-                <td>
-                    Getting Started Guides:
-                </td>
-                <td>
-                    <a href="{% url 'getting-started' 'writers' %}">For Writers</a><br>
-                    <a href="{% url 'getting-started' 'audio' %}">For Musicians and Video Creators</a>
-                </td>
-            </tr>
-        </table>
 
         <div id="canvas">
         {% block content %}
         {% endblock %}
         </div>
+        <footer>
+            <hr>
+            <table>
+                <tr>
+                    <td>
+                        Developer Links:
+                    </td>
+                    <td>
+                        <a href="{% url 'docs' 'microtip-meta-tag' %}">Microtip Meta Tag Specification</a><br>
+                        <a href="{% url 'docs' 'html5-audio-api' %}">Audio API</a>
+                    </td>
+                    <td>
+                        Getting Started Guides:
+                    </td>
+                    <td>
+                        <a href="{% url 'getting-started' 'writers' %}">For Writers</a><br>
+                        <a href="{% url 'getting-started' 'audio' %}">For Musicians and Video Creators</a>
+                    </td>
+                </tr>
+            </table>
+        </footer>
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

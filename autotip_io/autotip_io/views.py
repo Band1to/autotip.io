@@ -38,4 +38,9 @@ def getting_started(request, guide_name):
 
 def single_blog(request, pk):
     blog = Blog.objects.get(pk=pk)
-    return TemplateResponse(request, 'single_blog.html', {'blog': blog})
+    return TemplateResponse(request, 'single_article_or_blog.html', {'blog': blog})
+
+
+def single_article(request, pk):
+    article = Article.objects.get(pk=pk)
+    return TemplateResponse(request, 'single_article_or_blog.html', {'article': article})
