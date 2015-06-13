@@ -4,7 +4,7 @@
 
 <div class="blog">
     <h1>{{ article.title }}{{ blog.title }}</h1>
-    <em>{{ article.author }}{{ blog.date_created }}, by {{ blog.author }}{{ article.author }}</em>
+    <em>{{ article.date_created }}{{ blog.date_created }}, by {{ blog.author }}{{ article.author }}</em>
     <br><br>
     {{ blog.content|safe }}
     {{ article.content|safe }}
