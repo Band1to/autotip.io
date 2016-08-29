@@ -26,9 +26,6 @@ def home(request):
 def giveaway_rules(request):
     return TemplateResponse(request, 'giveaway_rules.html', {})
 
-def chrome_extension_docs(request):
-    return TemplateResponse(request, 'chrome_extension_usage.html', {})
-
 def docs(request, doc_name):
     return TemplateResponse(request, '%s_docs.html' % doc_name, {})
 
