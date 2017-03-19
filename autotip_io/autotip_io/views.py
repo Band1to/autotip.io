@@ -41,3 +41,7 @@ def single_blog(request, pk):
 def single_article(request, pk):
     article = Article.objects.get(pk=pk)
     return TemplateResponse(request, 'single_article_or_blog.html', {'article': article})
+
+def article_index(request):
+    articles = Article.objects.all()
+    return TemplateResponse(request, 'article_index.html', {'articles': articles})

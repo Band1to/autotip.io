@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for article in articles %}
+<div class="blog">
+    <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h2>
+    <em>{{ article.date_created }}, by {{ article.author }}</em>
+    <br> {{ article.tagline }}
+    <hr>
+</div>
+{% endfor %}
+
+{% endblock %}

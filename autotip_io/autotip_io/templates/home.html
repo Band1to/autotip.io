@@ -2,9 +2,11 @@
 
 {% block extrahead %}
 {{ block.super }}
-<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}home.css" media="screen" />
-<link href="{{ STATIC_URL }}jquery.zrssfeed.css" rel="stylesheet" type="text/css" />
-<script src="{{ STATIC_URL }}jquery.zrssfeed.min.js"></script>
+{% load staticfiles %}
+
+<link type="text/css" rel="stylesheet" href="{% static 'home.css' %}" media="screen" />
+<link href="{% static 'jquery.zrssfeed.css' %}" rel="stylesheet" type="text/css" />
+<script src="{% static 'jquery.zrssfeed.min.js' %}"></script>
 {% endblock %}
 
 {% block content %}
