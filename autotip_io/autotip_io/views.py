@@ -43,5 +43,5 @@ def single_article(request, pk):
     return TemplateResponse(request, 'single_article_or_blog.html', {'article': article})
 
 def article_index(request):
-    articles = Article.objects.all()
+    articles = Article.objects.order_by('date_created')
     return TemplateResponse(request, 'article_index.html', {'articles': articles})
